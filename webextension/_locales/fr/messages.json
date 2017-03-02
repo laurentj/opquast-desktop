@@ -3,5 +3,9 @@
   "extensionDescription": {
     "message": "Tests et rapports Opquast dans votre navigateur",
     "description": "Description de l'extension"
+  },
+  "oqs.analyze_with_opquast": {
+    "message": "Analyser avec Opquast",
+    "description": "Label du menu contextuel"
   }
 }

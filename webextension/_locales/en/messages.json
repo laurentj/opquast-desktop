@@ -3,5 +3,9 @@
   "extensionDescription": {
     "message": "Opquast testing and reporting in your browser",
     "description": "Description of the extension."
+  },
+  "oqs.analyze_with_opquast": {
+    "message": "Analyze with Opquast",
+    "description": "Label of the context menu"
   }
 }
