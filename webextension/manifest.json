@@ -4,7 +4,7 @@
   "name": "Opquast Desktop",
   "version": "2.0.4",
   "author": "Temesis SAS",
-  "description": "Opquast Reporting and testing in your browser",
+  "description": "__MSG_extensionDescription__",
   "homepage_url": "https://desktop.opquast.com/",
 
   "icons": {

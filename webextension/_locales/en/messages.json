@@ -1,3 +1,7 @@
 {
 
+  "extensionDescription": {
+    "message": "Opquast testing and reporting in your browser",
+    "description": "Description of the extension."
+  }
 }

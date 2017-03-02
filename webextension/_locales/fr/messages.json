@@ -1,3 +1,7 @@
 {
 
+  "extensionDescription": {
+    "message": "Tests et rapports Opquast dans votre navigateur",
+    "description": "Description de l'extension"
+  }
 }
