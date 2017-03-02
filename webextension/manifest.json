@@ -39,6 +39,15 @@
     },
     "default_title": "Opquast Desktop",
     "browser_style" : true
+  },
+  "commands": {
+    "opquast-open": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "linux": "Ctrl+Shift+U"
+      },
+      "description": "Opquast Desktop"
+    }
   }
 
 }
