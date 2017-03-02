@@ -35,6 +35,7 @@
             "value": false
         }
     ],
+    "hasEmbeddedWebExtension": true,
     "multiprocess" : true,
     "updateURL": "https://desktop.opquast.com/opquast-desktop/update.rdf",
     "updateLink": "https://desktop.opquast.com/opquast-desktop/extension.xpi"

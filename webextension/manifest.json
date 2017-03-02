@@ -1,0 +1,27 @@
+{
+
+  "manifest_version": 2,
+  "name": "Opquast Desktop",
+  "version": "2.0.4",
+  "author": "Temesis SAS",
+  "description": "Opquast Reporting and testing in your browser",
+  "homepage_url": "https://desktop.opquast.com/",
+
+  "icons": {
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png"
+  },
+  "background": {
+    "scripts": ["main.js"]
+  },
+  "content_security_policy": "script-src 'self' https://reporting.opquast.com; object-src 'self'",
+  "default_locale": "en",
+  "permissions": [],
+  "applications": {
+    "gecko": {
+      "id": "opquast-desktop-signed@temesis.com",
+      "strict_min_version": "51.0"
+    }
+  }
+
+}
