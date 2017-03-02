@@ -16,6 +16,14 @@ browser.runtime.sendMessage("message-from-webextension").then(reply => {
 });
 */
 
+/* TODO enable this when addon will be fully a webextension
+browser.runtime.onInstalled.addListener(function (details) {
+    console.log("install reason", details);
+    if (details.reason == 'install') {
+        openAbout();
+    }
+});
+*/
 
 function openAbout() {
     browser.i18n.getAcceptLanguages().then(languages => {
