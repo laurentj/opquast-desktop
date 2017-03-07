@@ -3,16 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Opquast Desktop</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="panel.js"></script>
 </head>
 
 <body>
 
+<header>
+    <div id="toolbar">
+        <span>Fake toolbar</span>
+        <button>Show</button>
+        <input type="text" id="searchbox"/>
+        <button>export</button>
+        <button>pref</button>
+        <button>?</button>
+    </div>
+</header>
 
+<div id="panels">
 
-<p>Hello world!</p>
-<button id="testbutton">click</button>
+</div>
+
+<template id="tplPanel">
+    <div class="panel">
+        <h1>A result panel</h1>
+        <h2 class="page-title"></h2>
+        <h3 class="page-url"></h3>
+        <div class="panel-content">
+
+        </div>
+    </div>
+</template>
+
+<template id="no-data">
+    <p>No result yet</p>
+    <p><button>launch</button></p>
+</template>
+
+<template id="results">
+    <p>Results of </p>
+    <p>bla bla bla, score 10/10.</p>
+</template>
+
 
 </body>
 </html>

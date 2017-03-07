@@ -106,21 +106,26 @@ var opquastPanel = {
             });
             return;
         }
-        let creating = browser.windows.create({
-            url: browser.extension.getURL('panel/main.html'),
-            type: "panel",
-            width: 600,
-            height: 500
+        let focusedWindowId = 0;
+        browser.windows.getLastFocused( {windowTypes: ["normal"]})
+            .then(focusedWindow => {
+                focusedWindowId = focusedWindow.id;
+                return browser.windows.create({
+                    url: browser.extension.getURL('panel/main.html'),
+                    type: "panel",
+                    width: 600,
+                    height: 500
 
-        });
-        creating.then(windowInfo => {
-            this.onOpen(windowInfo);
-        }, error => {
-            console.log(error);
-        });
+                });
+            }).then(windowInfo => {
+                this.onOpen(windowInfo, focusedWindowId);
+            }, error => {
+                console.log(error);
+            });
+
     },
 
-    onOpen : function(windowInfo) {
+    onOpen : function(windowInfo, focusedWindowId) {
         this.windowInfo = windowInfo;
         this._onPanelMessage = (msg) => {
             console.log("message from panel", msg);
@@ -131,6 +136,8 @@ var opquastPanel = {
             this.windowPort.onMessage.addListener(this._onPanelMessage);
             this.windowPort.postMessage({
                 command: "panel-ready",
+                windowId: windowInfo.id,
+                browserWindowId: focusedWindowId
             });
         };
         browser.runtime.onConnect.addListener(this._onConnect);

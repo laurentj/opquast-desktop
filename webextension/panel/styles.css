@@ -1,0 +1,56 @@
+#toolbar {
+    padding: 0px 16px 3px 10px;
+    background: linear-gradient(hsl(209, 18%, 30%), hsl(210, 24%, 16%)) no-repeat padding-box;
+    color: #ddd;
+}
+#toolbar button {
+    -moz-appearance: none;
+    -moz-user-focus: normal;
+    padding: 0 4px;
+    margin: 0 2px 2px 2px;
+    line-height: 1;
+    text-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: transparent;
+    background-image: linear-gradient(hsl(209, 15%, 27%), hsl(210, 20%, 13%));
+    background-repeat: no-repeat;
+    background-origin: padding-box;
+    color: #ddd;
+}
+#toolbar button:hover,
+#toolbar button:focus,
+#toolbar button:active {
+    background-image: linear-gradient(hsl(209, 10%, 28%), hsl(210, 14%, 8%));
+    color: #fff;
+}
+#toolbar button:focus {
+    border-color: #ff9f21;
+}
+#toolbar button:active {
+    border-color: #000;
+}
+
+#toolbar button[disabled=true] {
+    border-color: rgba(255,255,255, 0.1);
+    color: rgba(255,255,255, 0.1) !important;
+    -moz-user-focus: none;
+}
+
+
+#searchbox {
+    -moz-appearance: none;
+    border-radius: 10000px;
+    border: 1px inset rgba(0,0,0, 0.2);
+    margin: 2px 2px 3px 20px;
+    padding: 2px 10px;
+    background-color: rgba(255,255,255, 0.7);
+}
+
+#panels > div {
+    display:none;
+}
+
+#panels > div.active {
+    display:block;
+}
