@@ -4,7 +4,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 
-// Common
+const ENABLE_EXPERIMENTAL_WINDOW = true;
+
+/**
+ * Function that implements the command on the toolbar button/shortcut key/menu item
+ */
 let panelCmd = function(aRunTest, aCanClose) {
     aRunTest = typeof(aRunTest) === "undefined" ? false : aRunTest;
     aCanClose = typeof(aCanClose) === "undefined" ? true : aCanClose;
@@ -15,6 +19,11 @@ let panelCmd = function(aRunTest, aCanClose) {
         canClose: aCanClose
     }).then(reply => {
     });
+
+    if (ENABLE_EXPERIMENTAL_WINDOW) {
+        opquastPanel.open();
+    }
+
 };
 
 // listener on the toolbar button (see browser_action in manifest.json)
@@ -41,3 +50,98 @@ browser.commands.onCommand.addListener(function(command) {
         panelCmd(false);
     }
 });
+
+
+browser.windows.onRemoved.addListener(function(windowId) {
+    if (!ENABLE_EXPERIMENTAL_WINDOW) {
+        return;
+    }
+    if (opquastPanel.windowInfo && opquastPanel.windowInfo.id == windowId) {
+        opquastPanel.onClose();
+    }
+});
+
+
+var opquastPanel = {
+    /**
+     * the window showing the panel of the extension
+     * @type windows.Window
+     */
+    windowInfo : null,
+
+    /**
+     * Port to communicate with the panel
+     * @type runtime.Port
+     */
+    windowPort : null,
+
+    toggle: function(aCanClose) {
+        if (this.windowInfo) {
+            if (aCanClose) {
+                // let's close the window
+                this.close();
+            }
+        }
+        else {
+            this.open();
+        }
+    },
+
+    close : function() {
+        if (!this.windowInfo) {
+            return;
+        }
+        let removing = browser.windows.remove(this.windowInfo.id);
+        removing.then(() => {
+            // stuff to clear things is done from the browser.windows.onRemoved listener
+        }, error => {
+            console.log(error);
+        });
+    },
+
+    open : function() {
+        if (this.windowInfo) {
+            this.windowPort.postMessage({
+                command: "panel-focus",
+            });
+            return;
+        }
+        let creating = browser.windows.create({
+            url: browser.extension.getURL('panel/main.html'),
+            type: "panel",
+            width: 600,
+            height: 500
+
+        });
+        creating.then(windowInfo => {
+            this.onOpen(windowInfo);
+        }, error => {
+            console.log(error);
+        });
+    },
+
+    onOpen : function(windowInfo) {
+        this.windowInfo = windowInfo;
+        this._onPanelMessage = (msg) => {
+            console.log("message from panel", msg);
+        };
+
+        this._onConnect = (port) => {
+            this.windowPort = port;
+            this.windowPort.onMessage.addListener(this._onPanelMessage);
+            this.windowPort.postMessage({
+                command: "panel-ready",
+            });
+        };
+        browser.runtime.onConnect.addListener(this._onConnect);
+    },
+    onClose : function() {
+        if (this.windowPort) {
+            this.windowPort.onMessage.removeListener(this._onPanelMessage);
+            this.windowPort = null;
+        }
+        this.windowInfo = null;
+        browser.runtime.onConnect.removeListener(this._onConnect);
+    }
+};
+

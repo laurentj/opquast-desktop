@@ -8,11 +8,11 @@
 var legacyAddonPort = browser.runtime.connect({name: "legacy-opquast"});
 
 legacyAddonPort.onMessage.addListener(function(msg) {
-    if (!("cmd" in msg)) {
+    if (!("command" in msg)) {
         return;
     }
 
-    switch(msg.cmd) {
+    switch(msg.command) {
         case "open-about":
             openAbout();
             break;

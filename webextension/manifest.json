@@ -23,7 +23,9 @@
   "content_security_policy": "script-src 'self' https://reporting.opquast.com; object-src 'self'",
   "default_locale": "en",
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "tabs",
+    "activeTab"
   ],
   "applications": {
     "gecko": {
