@@ -61,7 +61,9 @@ browser.windows.onRemoved.addListener(function(windowId) {
     }
 });
 
-
+/**
+ * Manage the window popup of the extension
+ */
 var opquastPanel = {
     /**
      * the window showing the panel of the extension

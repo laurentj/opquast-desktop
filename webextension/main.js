@@ -50,3 +50,26 @@ function openAbout() {
     });
 }
 
+function readExtensionFile(filename, filetype) {
+    return new Promise(function(resolve, reject) {
+        let request = new XMLHttpRequest();
+        let url = browser.extension.getURL(filename);
+        request.open("GET", url);
+        request.responseType = filetype || 'json'; // FIXME COMPAT Edge
+        request.onload = function() {
+            if (request.status === 200) {
+                resolve(request.response);
+            } else {
+                reject(Error('Content didn\'t load successfully; error code:' + request.statusText));
+            }
+        };
+        request.onerror = function() {
+            reject(Error('There was a network error.'));
+        };
+        // Send the request
+        request.send();
+    });
+}
+
+
+
