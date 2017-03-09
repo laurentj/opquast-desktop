@@ -219,11 +219,6 @@ function removePanelOfTab(tabId) {
     }
 }
 
-
-window.addEventListener("load", function() {
-
-});
-
 window.addEventListener("unload", function() {
     browser.tabs.onCreated.removeListener(onTabCreated);
     browser.tabs.onActivated.removeListener(onTabActivated);
