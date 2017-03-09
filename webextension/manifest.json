@@ -25,7 +25,8 @@
   "permissions": [
     "contextMenus",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "downloads"
   ],
   "applications": {
     "gecko": {

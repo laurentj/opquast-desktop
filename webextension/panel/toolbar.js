@@ -24,31 +24,34 @@ function testExport() {
     let csvBlob = new Blob(csvContent, { type: "text/csv" });
     let blobUrl = window.URL.createObjectURL(csvBlob);
 
-    // We set the url to the iframe, so the browser will
-    // open a File dialog box to save the content, as it doesn't
-    // support the given content type.
-    // Issue: we cannot indicate a filename
-    let iframe = document.getElementById('download');
-    iframe.setAttribute('src', blobUrl);
-    window.URL.revokeObjectURL(blobUrl);
+    let downloadId = null;
+    let dwnOnChanged = function(downloadDelta) {
+        if (downloadId === null || downloadDelta.id != downloadId) {
+            return;
+        }
+        if (! ('state' in downloadDelta)) {
+            return;
+        }
+        console.log(`downloading state: ${downloadDelta.state.current}`);
+        if (downloadDelta.state.current == 'complete' ||
+            downloadDelta.state.current == 'interrupted' ) {
+            window.URL.revokeObjectURL(blobUrl);
+            downloadId = null;
+            browser.downloads.onChanged.removeListener(dwnOnChanged);
+            console.log("finished !");
+        }
+    };
 
-    // FIXME. Other solution for the download, by using a link element.
-    // We can indicate a filename. However, it doesn't work
-    // although it should (according to stackoverflow :-):
-    // Firefox doesn't open a dialog box :-( it seems there are errors
-    // from inside its components
-    /*let link= document.createElementNS("http://www.w3.org/1999/xhtml", "a");
-    //document.body.appendChild(link);
-    //link.setAttribute('target', '_blank');
-    console.log("can download", ("download" in link));
-    link.href = blobUrl;
-    link.download = 'opquast.csv';
-    let event = new MouseEvent("click");
-    link.dispatchEvent(event);
-    window.setTimeout(() => {
-        link.remove();
-     window.URL.revokeObjectURL(blobUrl);
-    }, 1000*40);
-     */
+    browser.downloads.onChanged.addListener(dwnOnChanged);
+    browser.downloads.download({
+        url: blobUrl,
+        filename: "opquast.csv",
+        saveAs: true,
+    }).then(dwnId => {
+            downloadId = dwnId;
+            console.log(`Started downloading: ${id}`);
+    },error => {
+        console.log(`Download failed: ${error}`);
+    });
 }
 
